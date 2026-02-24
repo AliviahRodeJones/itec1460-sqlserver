@@ -118,3 +118,79 @@ WHERE BookID = 1;
 
 -- View the record from the audit. 
 SELECT * FROM BookPriceAudit
+
+
+
+-- 2: Create Book Reviews Table
+CREATE TABLE BookReviews (
+    ReviewID INT PRIMARY KEY, 
+    Rating INT CHECK(Rating BETWEEN 1 AND 5), 
+    BookID INT, 
+    CustomerID NCHAR(5),  
+    ReviewText NVARCHAR(MAX), 
+    ReviewDate DATE, 
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+
+);
+
+INSERT INTO BookReviews(ReviewiD, Rating, BookID, CustomerID, ReviewText, ReviewDate)
+VALUES
+(6, 5, 4, 'BERGS', 'Review 6', '2026-2-24'), 
+(7, 4, 2, 'CENTC', 'Review 7', '2026-2-23');
+(1, 4, 6, 'ALFKI', 'Review 1', '2025-03-20'), 
+(2, 3, 1, 'ANTON', 'Review 2', '2026-10-17'), 
+(3, 5, 2, 'BERGS', 'Review 3', '2022-02-11'),
+(4, 3, 3, 'BOLID', 'Review 4', '2022-02-11'), 
+(5, 5, 5, 'CENTC', 'Review 5', '2025-04-21');
+
+SELECT * FROM BookReviews;
+SELECT * FROM Customers;
+SELECT * FROM Books;
+
+-- 3: Create a vw_BookReviewStats that 
+CREATE VIEW vw_BookReviewStats AS 
+SELECT 
+b.Title AS BookTitle,
+COUNT(r.ReviewID) AS ReviewCount, 
+AVG(r.Rating) AS AverageRating, 
+MAX(r.ReviewDate) AS MostRecentReview 
+FROM Books b
+LEFT JOIN BookReviews r ON r.BookID = b.BookID
+GROUP BY b.Title;
+
+SELECT * FROM vw_BookReviewStats;
+
+
+-- DRAFT: A trigger that prevents views from being added with future dates. 
+CREATE TRIGGER trg_ValidateReviewDate
+ON BookReviews 
+AFTER UPDATE
+AS 
+BEGIN
+    IF UPDATE(ReviewDate)
+    BEGIN
+        DELETE FROM BookReviews WHERE (ReviewDate > GETDATE())
+    END
+END;
+
+
+
+
+        
+--DRAFT: Create a trigger that adds the average rating column to the Books table 
+-- Authomatically updates the Books.Average rating when reviews are added, updated, or deleted. 
+
+-- Adding an averagerating column to books
+ALTER TABLE Books
+ADD AverageRating DECIMAL(3,2);
+
+CREATE TRIGGER trg_UpdateReviewRating 
+ON BookReviews
+AFTER INSERT, UPDATE, DELETE 
+AS 
+BEGIN
+    INSERT INTO Books (AverageRating)
+    SELECT AVG(BookReviews.rating)
+    FROM BookReviews
+    JOIN Books ON BookReviews.BookID = Books.BookID
+END;
