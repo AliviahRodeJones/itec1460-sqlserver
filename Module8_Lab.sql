@@ -91,3 +91,102 @@ ON i.object_id = ic.object_id AND i.index_id = ic.index_id
 WHERE i.object_id = OBJECT_ID('Products')
 ORDER BY i.name;
 GO
+
+
+-- ===== PART 2 STEP 2: ADD INVENTORY USER =====
+CREATE LOGIN InventoryMgr WITH PASSWORD = 'InvMgr123!';
+-- had to change this password because it doesn't meet SQL server password policy requirements. 
+GO
+-- Creates a new user with the previous login.
+CREATE USER InventoryMgr FOR LOGIN InventoryMgr;
+GO
+-- Grants that new user select and update privileges on only the products table. 
+GRANT SELECT, UPDATE ON Products TO InventoryMgr;
+GO
+
+-- Checking permissions with a select statement.
+SELECT 
+    dp.name AS UserName,
+    o.name AS TableName,
+    p.permission_name AS Permission
+FROM sys.database_permissions p
+JOIN sys.database_principals dp 
+    ON p.grantee_principal_id = dp.principal_id
+JOIN sys.objects o 
+    ON p.major_id = o.object_id
+WHERE dp.name IN ('Cashier', 'Manager')
+ORDER BY UserName, TableName;
+GO
+
+-- ===== PART 2 STEP 3: TABLE SIZES =====
+USE PixelPizzaPalace;
+GO
+
+SELECT 
+    t.name AS TableName,
+    p.rows AS NumberOfRows,
+    SUM(a.total_pages) * 8 AS TotalSpaceKB
+FROM sys.tables t
+JOIN sys.indexes i 
+    ON t.object_id = i.object_id
+JOIN sys.partitions p 
+    ON i.object_id = p.object_id 
+    AND i.index_id = p.index_id
+JOIN sys.allocation_units a 
+    ON p.partition_id = a.container_id
+GROUP BY t.name, p.rows
+ORDER BY TotalSpaceKB DESC;
+GO
+
+-- ===== PART 2 STEP 4: BACKUP AND RESTORE =====
+INSERT INTO Products (ProductName, Price, Stock)
+VALUES ('Ice Cream Sundae', 5.99, 60);
+GO
+
+-- Backs up the database again. 
+BACKUP DATABASE PixelPizzaPalace
+TO DISK = '/var/opt/mssql/data/PixelPizzaPalace_New.bak'
+WITH FORMAT;
+GO
+
+DELETE FROM Products WHERE ProductName = 'Ice Cream Sundae';
+GO
+
+SELECT * FROM Products;
+GO
+
+USE master;
+GO
+
+-- Take the database offline so we can restore it
+ALTER DATABASE PixelPizzaPalace SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+GO
+
+RESTORE DATABASE PixelPizzaPalace
+FROM DISK = '/var/opt/mssql/data/PixelPizzaPalace_New.bak'
+WITH REPLACE;
+GO
+
+-- Bring the database back online for all users
+ALTER DATABASE PixelPizzaPalace SET MULTI_USER;
+GO
+
+USE PixelPizzaPalace;
+GO
+
+SELECT * FROM Products;
+GO
+
+
+
+
+
+-- ===== PART 2 STEP 5: REFLECTION =====
+/*
+1: We backed up our database; gave our users a password for authentication and decreased their privileges 
+for authorization; and we added indexes that makes searching a database much quicker.  
+2: Principle of least privilege. Some users shouldn't have access to sensitive information. 
+For instance a cashier shouldn’t be able to see their coworkers' information.  
+3: You could loose it. If some kind of hardware or availibility issue occurs, backups allow you to 
+get a 
+*/
