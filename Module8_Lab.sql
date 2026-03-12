@@ -114,7 +114,7 @@ JOIN sys.database_principals dp
     ON p.grantee_principal_id = dp.principal_id
 JOIN sys.objects o 
     ON p.major_id = o.object_id
-WHERE dp.name IN ('Cashier', 'Manager')
+WHERE dp.name IN ('Cashier', 'Manager', 'InventoryMgr')
 ORDER BY UserName, TableName;
 GO
 
@@ -122,6 +122,7 @@ GO
 USE PixelPizzaPalace;
 GO
 
+-- Checks the sizes of our two tables. 
 SELECT 
     t.name AS TableName,
     p.rows AS NumberOfRows,
@@ -151,7 +152,7 @@ GO
 
 DELETE FROM Products WHERE ProductName = 'Ice Cream Sundae';
 GO
-
+-- Checks the items in the Products table. 
 SELECT * FROM Products;
 GO
 
@@ -183,10 +184,13 @@ GO
 
 -- ===== PART 2 STEP 5: REFLECTION =====
 /*
-1: We backed up our database; gave our users a password for authentication and decreased their privileges 
-for authorization; and we added indexes that makes searching a database much quicker.  
-2: Principle of least privilege. Some users shouldn't have access to sensitive information. 
-For instance a cashier shouldn’t be able to see their coworkers' information.  
-3: You could loose it. If some kind of hardware or availibility issue occurs, backups allow you to 
-get a 
+1: We backed up our database; gave our users a password for authentication and decreased privileges 
+for authorization; and we added indexes that makes searching a database much quicker. These were the
+three most important database tasks we practiced in this lab.
+2: Our new database needs permission controls because of the principle of least privilege. Some users 
+shouldn't have access to sensitive information. For instance a cashier shouldn’t be able to see 
+their coworkers' information. Also, employees who need to acces that information, like a manager, should
+be given access to it.   
+3: You could loose data. If some kind of hardware or availibility issue occurs, backups allow you to 
+keep a copy of that database. You can use this backup to get the database back up and running quickly. 
 */
