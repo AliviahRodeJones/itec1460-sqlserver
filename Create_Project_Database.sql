@@ -68,6 +68,7 @@ CREATE TABLE Inventory (
     MostRecentExpDate DATETIME NULL,
     CostPerUnit Money NULL  
 );
+-- The above table has been run
 
 CREATE TABLE Visitors (
     VisitorID INT IDENTITY (1,1) PRIMARY KEY, 
@@ -75,6 +76,7 @@ CREATE TABLE Visitors (
     VisitorPhoneNumber char(10),
     VisitorCity varchar(50)
 );
+-- The above table has been run
 
 CREATE TABLE Adoption_Applications (
     ApplicationID INT IDENTITY (1,1) PRIMARY KEY,

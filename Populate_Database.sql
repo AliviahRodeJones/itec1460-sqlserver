@@ -40,3 +40,27 @@ VALUES
 (1004, 10.5, 6, 'Upper Respiratory Infection', 'Needs antibiotics. Clean eye/nose discharge daily. Encourage eating and hydration', '2025-10-16'),
 (1005, 8.5, 4, 'NA', 'Healthy cat', '2025-11-22');
 -- All above code has been run
+
+INSERT INTO dbo.Inventory(ProductID, ProductName, ProductType, Stock, MostRecentExpDate, CostPerUnit)
+VALUES
+(5023, 'Purina Cat Chow', 'Cat Food', 5, '2026-05-01', 12.50),
+(5025, 'Purina Tidy Cats', 'Cat Litter', 3, NULL, 16.99),
+(5045, 'Temptations', 'Cat Treats', 7, '2026-06-12', 6.99),
+(5001, 'Feather Toy', 'Cat Toy', 4, NULL, 2.50);
+-- This insert statement represents supplies that the organization already owns. 
+
+INSERT INTO dbo.Inventory(ProductID, ProductName, ProductType, Stock, MostRecentExpDate, CostPerUnit)
+VALUES 
+(5046, 'Arm & Hammer Litter', 'Cat Litter', 2, NULL, NULL),
+(5047, 'Fancy Feast', 'Cat Food', 10, '2026-12-28', NULL),
+(5048, 'Catnip Mouse', 'Cat Toy', 5, NULL, NULL);
+-- This insert statement represents a donation of supplise that the organization recieved. 
+-- Some values are left null to simulate this. 
+
+INSERT INTO dbo.Visitors(VisitorName, VisitorPhoneNumber, VisitorCity)
+VALUES
+('Wendy N', '1111111111', 'Minneapolis'),
+('Mei R', '2222222222', 'Bloomington'),
+('Wayne M', '3333333333', 'St.Paul'),
+('Mateo J', '4444444444', 'St.Paul');
+-- This statement has been run. 
