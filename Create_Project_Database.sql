@@ -28,9 +28,8 @@ CREATE TABLE Employee_Volunteer (
 );
 -- The above code has been run
 
-
 CREATE TABLE Intake_Card (
-    IntakeID INT PRIMARY KEY, 
+    IntakeID INT IDENTITY (1,1) PRIMARY KEY, 
     CatID INT,
     EmployeeID INT, 
     PreviousOwnerName NVARCHAR(50) NULL, 
@@ -87,6 +86,7 @@ CREATE TABLE Adoption_Applications (
     CONSTRAINT FK_AdoptionApp_CatID FOREIGN KEY(CatID)
     REFERENCES Cats(CatID),
 );
+-- The above table has been run.
 
 CREATE TABLE Reservations (
     ReservationID INT IDENTITY (1,1) PRIMARY KEY,

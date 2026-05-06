@@ -1,4 +1,13 @@
 USE ProjectDatabase;
+-- Creates a procedure for getting a catID by the cat name.
+CREATE OR ALTER PROCEDURE getByName 
+    @Name NVARCHAR(50)
+AS 
+BEGIN
+    SET NOCOUNT ON
+    Select CatID from Cats where Name = @Name
+END
+GO
 
 INSERT INTO dbo.Cats(Name, Age, Adopted, Breed, CoatColor, Sex)
 VALUES('Lucy', 3, 0, 'Siamese', 'Brown/White', 'F');
@@ -13,6 +22,11 @@ VALUES
 ('Bob', 4, 0, 'Persian', 'White', 'M');
 -- Inserts sample data for the cats database. 
 
+INSERT INTO dbo.Cats(Name, Age, Adopted, Breed, CoatColor, Sex)
+VALUES
+('Dave', 9, 1, )
+
+
 INSERT INTO dbo.Employee_Volunteer(Name, SocialSecurityNumber, Employed, PositionTitle, HourlyWage, DateHired)
 VALUES
 ('Ignatio G', '111111111', 1, 'Manager', 25.55, '2024-12-01'), 
@@ -22,13 +36,13 @@ VALUES
 ('Michael G', '555555555', 0, 'Manager', 25.55, '2024-01-01');
 --  All above code has been run. 
 
-INSERT INTO dbo.Intake_Card(IntakeID, CatID, EmployeeID, PreviousOwnerName, LocationFound, DateSurrendered)
+INSERT INTO dbo.Intake_Card(CatID, EmployeeID, PreviousOwnerName, LocationFound, DateSurrendered)
 VALUES
-(1, 2002, 1, 'Robert R', 'NA', '2024-12-04'), 
-(2, 1002, 1, 'NA', 'Burnsville,MN', '2025-01-12'), 
-(3, 1003, 2, 'NA', 'Minneapolis,MN', '2025-04-21'), 
-(4, 1004, 3, 'NA', 'Edina,MN', '2025-10-15'), 
-(5, 1005, 2, 'Linda B', 'NA', '2025-11-20');
+(2002, 1, 'Robert R', 'NA', '2024-12-04'), 
+(1002, 1, 'NA', 'Burnsville,MN', '2025-01-12'), 
+(1003, 2, 'NA', 'Minneapolis,MN', '2025-04-21'), 
+(1004, 3, 'NA', 'Edina,MN', '2025-10-15'), 
+(1005, 2, 'Linda B', 'NA', '2025-11-20');
 -- All above code has been run. 
 
 Insert INTO dbo.Vet_Visits(CatID, Weight, BodyConditionScore, Diagnosis, VetNotes, AppointmentDate)
@@ -64,3 +78,33 @@ VALUES
 ('Wayne M', '3333333333', 'St.Paul'),
 ('Mateo J', '4444444444', 'St.Paul');
 -- This statement has been run. 
+
+INSERT INTO dbo.Reservations(VisitorID, CatID, ReservationDate)
+VALUES
+(1, 1004, '2025-01-22'),
+(2, 1005, '2025-04-25'), 
+(3, 1002, '2025-04-29'),
+(4, 1003, '2025-05-02');
+
+-- First Insert catIDs for "previously adopted cats"
+INSERT INTO dbo.Cats(Name, Age, Adopted, Breed, CoatColor, Sex)
+VALUES 
+('Grumbly', 9, 1, 'Short-hair', 'Brown', 'M'), 
+('Loki', 5, 1, 'Short-hair Tabby', 'Grey', 'M'),
+('Kitty', 2, 1, 'Long-hair', 'Black', 'F'),
+('Pepper', 10, 1, 'Short-hair Calico', 'White/Orange/Grey','F');
+
+INSERT INTO dbo.Visitors(VisitorName, VisitorPhoneNumber, VisitorCity)
+VALUES
+('Mat S', '1234567890', 'Minneapolis'),
+('Stephen G', '2345678901', 'Blaine'),
+('Jordan H', '3456789012', 'Maple Grove');
+
+INSERT INTO dbo.Adoption_Applications(CatID, VisitorID, AdoptionDate, AdoptionFee)
+VALUES
+(1004, 1, '2025-01-28', 125),
+(2003, 1002, '2024-10-12', 150),
+(2004, 1003, '2024-12-08', 200),
+(2005, 1004, '2024-12-24', 150),
+(2006, 1004, '2024-12-24', 150);
+-- ALL CODE HAS BEEN RUN
