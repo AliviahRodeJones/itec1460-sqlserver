@@ -51,6 +51,25 @@ END;
 
 EXEC TodaysAppointmentsProcedure @Date = '2025-04-23';
 
+
 -- Delete Procedure
 
-CREATE OR ALTER TABLE
+CREATE OR ALTER PROCEDURE DeleteReservation
+@ReservationID INT
+AS
+    BEGIN
+    SET NOCOUNT ON
+    DECLARE @VisitorID INT
+    SELECT @VisitorID = VisitorID FROM Reservations WHERE ReservationID = @ReservationID
+    DELETE FROM dbo.Reservations WHERE ReservationID = @ReservationID
+    PRINT 'Successfully deleted the reservation ' + CAST (@ReservationID AS NVARCHAR(20))
+    PRINT 'For visitorID number ' + CAST(@VisitorID AS NVARCHAR(20))
+END;
+    
+
+INSERT INTO dbo.Reservations(VisitorID, CatID, ReservationDate)
+VALUES (1003, 1002, '2025-05-07');
+
+EXEC TodaysAppointmentsProcedure @Date = '2025-05-07';
+
+EXEC DeleteReservation @ReservationID = 1003;
