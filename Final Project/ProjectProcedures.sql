@@ -36,8 +36,11 @@ END;
 
 -- This procedures purpose is to make inserting a new cat into the database easier. 
 
-EXEC NewCatProcedure @Name = 'Barney', @Age = 5, @Breed = 'Persian', @CoatColor = 'White', @Sex = 'M', @EmployeeID = 1, 
-@LocationFound = 'NA', @PreviousOwnerName = 'Sarah L', @DateSurrendered = '2026-04-25';
+EXEC NewCatProcedure @Name = 'Chris', @Age = 6, @Breed = 'Ragdoll', @CoatColor = 'White/Black', @Sex = 'M', @EmployeeID = 1, 
+@LocationFound = 'NA', @PreviousOwnerName = 'Paul H', @DateSurrendered = '2026-05-14';
+
+SELECT * FROM Cats
+SELECT * FROM Intake_Card
 
 
 
@@ -51,7 +54,7 @@ AS
 END;
 -- This procedure is used to check Reservations and Vet_Visits for appointments scheduled for the date parameter. 
 
-EXEC TodaysAppointmentsProcedure @Date = '2025-04-23';
+EXEC TodaysAppointmentsProcedure @Date = '2025-05-02';
 
 
 -- Delete Procedure
@@ -74,4 +77,4 @@ VALUES (1003, 1002, '2025-05-07');
 
 EXEC TodaysAppointmentsProcedure @Date = '2025-05-07';
 
-EXEC DeleteReservation @ReservationID = 1003;
+EXEC DeleteReservation @ReservationID = ;

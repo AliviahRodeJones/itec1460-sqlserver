@@ -1,5 +1,4 @@
 -- Creates the database for this project. 
--- THIS CODE HAS NOT BEEN RUN YET
 --CREATE DATABASE ProjectDatabase;
 --GO
 
@@ -14,7 +13,8 @@ CREATE TABLE Cats (
     CoatColor nvarchar (50) NOT NULL,
     Sex nvarchar (1) NULL
 );
--- The Above code has been run. 
+-- Creates a table that stores cat information. 
+-- Has the CatID value as a primary key. Has no foreign keys. 
 
 
 CREATE TABLE Employee_Volunteer (
@@ -26,7 +26,8 @@ CREATE TABLE Employee_Volunteer (
     HourlyWage REAL NOT NULL, 
     DateHired DATETIME NOT NULL
 );
--- The above code has been run
+--Creates a table that stores information about the people working at the shelter. 
+-- Has the EmployeeID as a primary key. Has no foreign key. 
 
 CREATE TABLE Intake_Card (
     IntakeID INT IDENTITY (1,1) PRIMARY KEY, 
@@ -41,7 +42,8 @@ CREATE TABLE Intake_Card (
     CONSTRAINT FK_IntakeCard_EmployeeID FOREIGN KEY(EmployeeID)
     REFERENCES Employee_Volunteer (EmployeeID)
 );
--- The above code has been run
+-- Creates a table that stores cat intake information.
+-- Has IntakeID as a primary key. Has CatID and EmployeeID as a foreign key. 
 
 
 CREATE TABLE Vet_Visits (
@@ -56,7 +58,9 @@ CREATE TABLE Vet_Visits (
     CONSTRAINT FK_VetVisits_CatID FOREIGN KEY(CatID) 
     REFERENCES Cats (CatID),
 );
---This table will also store upcoming vet visits. Important when creating the Todays_Appointments_procedure
+-- Creates the table that stores vet visit information. 
+-- Has VisitID as a primary key. Has CatID as a forign key. 
+-- This table will also store upcoming vet visits. Important when creating the Todays_Appointments_procedure
 
 CREATE TABLE Inventory (
     ProductID INT PRIMARY KEY, 
@@ -66,7 +70,8 @@ CREATE TABLE Inventory (
     MostRecentExpDate DATETIME NULL,
     CostPerUnit Money NULL  
 );
--- The above table has been run
+-- Creates a table that stores info about supplise the organization has. 
+-- Has ProductID as a primary key. 
 
 CREATE TABLE Visitors (
     VisitorID INT IDENTITY (1,1) PRIMARY KEY, 
@@ -74,7 +79,8 @@ CREATE TABLE Visitors (
     VisitorPhoneNumber char(10),
     VisitorCity varchar(50)
 );
--- The above table has been run
+-- Creates a table that stores info about visitors to the shelter. 
+-- Has VisitorID as a primary key. 
 
 CREATE TABLE Adoption_Applications (
     ApplicationID INT IDENTITY (1,1) PRIMARY KEY,
@@ -85,6 +91,8 @@ CREATE TABLE Adoption_Applications (
     CONSTRAINT FK_AdoptionApp_CatID FOREIGN KEY(CatID)
     REFERENCES Cats(CatID),
 );
+-- Creates a table that stores adoption application data. 
+-- Has ApplicationID as a primary key. Has CatID and VisitorID as a foreign key. 
 
 CREATE TABLE Reservations (
     ReservationID INT IDENTITY (1,1) PRIMARY KEY,
@@ -96,6 +104,5 @@ CREATE TABLE Reservations (
     CONSTRAINT FK_Reservation_CatID FOREIGN KEY(CatID)
     REFERENCES Cats(CatID),
 );
-
-
-
+-- Creates a table that keeps track of current reservations made by visitors to see specific cats. 
+-- Has ReservationID as a primary key. Has CatID and VisitorID as a foreign key. 

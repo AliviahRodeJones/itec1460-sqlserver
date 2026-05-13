@@ -29,4 +29,3 @@ GRANT UNMASK TO Ignatio_G;
 GRANT SELECT, INSERT, UPDATE TO Samantha_M, Richard_H, Matty_S
 -- All employees and volunteers have select, insert, and update privleges. And no unmask privleges. 
 -- When logged in as an employee, the social security column should be masked. 
-

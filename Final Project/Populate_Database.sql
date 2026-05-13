@@ -9,11 +9,11 @@ BEGIN
 END
 GO
 -- This procedure makes it easier to find a cat's id. 
+EXEC getByName @Name = 'Lucy'
 
 INSERT INTO dbo.Cats(Name, Age, Adopted, Breed, CoatColor, Sex)
 VALUES('Lucy', 3, 0, 'Siamese', 'Brown/White', 'F');
--- First test sample data. 
-Delete from Cats Where Name = 'Lucy';
+
 
 INSERT INTO dbo.Cats(Name, Age, Adopted, Breed, CoatColor, Sex)
 VALUES
