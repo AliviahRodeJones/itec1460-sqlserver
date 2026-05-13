@@ -1,6 +1,6 @@
 USE ProjectDatabase;
 
-Shows off the getByName procedure created in the populate_Database.sql file
+--Shows off the getByName procedure created in the populate_Database.sql file
 EXEC getByName @Name = 'Lucky';
 
 -- Create Procedure --
@@ -33,7 +33,9 @@ AS
     (@CatID, @EmployeeID, @PreviousOwnerName, @LocationFound, @DateSurrendered)
 
 END;
+
 -- This procedures purpose is to make inserting a new cat into the database easier. 
+
 EXEC NewCatProcedure @Name = 'Barney', @Age = 5, @Breed = 'Persian', @CoatColor = 'White', @Sex = 'M', @EmployeeID = 1, 
 @LocationFound = 'NA', @PreviousOwnerName = 'Sarah L', @DateSurrendered = '2026-04-25';
 

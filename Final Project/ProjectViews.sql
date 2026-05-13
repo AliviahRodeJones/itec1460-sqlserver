@@ -25,3 +25,20 @@ SELECT
 -- And the most recent experation date is in the past (expired).
     
 Select * from CheckInventory
+
+CREATE OR ALTER VIEW VisitorInfoAndReservations AS
+SELECT 
+    r.ReservationID, 
+    r.ReservationDate, 
+    r.VisitorID, 
+    r.CatID,
+    v.VisitorName,
+    v.VisitorPhoneNumber,
+    v.VisitorCity
+    FROM Reservations as r
+    LEFT JOIN Visitors v ON r.VisitorID = v.VisitorID
+    WHERE r.ReservationDate <= GETDATE();
+    -- This view shows every current reservation with data from the Visitors table and Reservations table. 
+                        
+SELECT * FROM VisitorInfoAndReservations
+ORDER BY ReservationDate

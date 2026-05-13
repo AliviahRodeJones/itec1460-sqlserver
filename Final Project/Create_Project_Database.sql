@@ -56,7 +56,6 @@ CREATE TABLE Vet_Visits (
     CONSTRAINT FK_VetVisits_CatID FOREIGN KEY(CatID) 
     REFERENCES Cats (CatID),
 );
--- The above code has been run. 
 --This table will also store upcoming vet visits. Important when creating the Todays_Appointments_procedure
 
 CREATE TABLE Inventory (
@@ -86,7 +85,6 @@ CREATE TABLE Adoption_Applications (
     CONSTRAINT FK_AdoptionApp_CatID FOREIGN KEY(CatID)
     REFERENCES Cats(CatID),
 );
--- The above table has been run.
 
 CREATE TABLE Reservations (
     ReservationID INT IDENTITY (1,1) PRIMARY KEY,
@@ -99,6 +97,5 @@ CREATE TABLE Reservations (
     REFERENCES Cats(CatID),
 );
 
--- All of my tables are completed. 
--- THIS CODE HAS NOT BEEN RUN YET
+
 
