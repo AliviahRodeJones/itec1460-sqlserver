@@ -90,6 +90,8 @@ CREATE TABLE Adoption_Applications (
     AdoptionFee REAL NOT NULL
     CONSTRAINT FK_AdoptionApp_CatID FOREIGN KEY(CatID)
     REFERENCES Cats(CatID),
+    CONSTRAINT FK_AdoptionApp_VisitorID FOREIGN KEY(CatID)
+    REFERENCES Visitors(VisitorID)
 );
 -- Creates a table that stores adoption application data. 
 -- Has ApplicationID as a primary key. Has CatID and VisitorID as a foreign key. 
